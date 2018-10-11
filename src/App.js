@@ -1,5 +1,6 @@
 // EXTERNAL DEPENDENCIES
 import React, { Component } from 'react';
+import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
@@ -26,6 +27,11 @@ const paper = {
   width: 500
 }
 
+const authorStyles = {
+  margin: '15px 0',
+  textAlign: 'right',
+}
+
 // COMPONENT DEFINITION
 export default class App extends Component {
   state = {
@@ -50,10 +56,6 @@ export default class App extends Component {
     this.getQuote();
   }
 
-  handleTweet = () => {
-    console.log('%c tweet', 'color: #308e7b');
-  }
-
   render() {
     const { author, quote } = this.state;
     const populateTweet = `https://twitter.com/intent/tweet?text=${quote} -${author}`;
@@ -62,10 +64,10 @@ export default class App extends Component {
         <CssBaseline />
         <div style={paperWrapper}>
           <Paper style={paper}>
-            <p>{quote ? quote : <CircularProgress />}</p>
-            <p>{author ? `- ${author}` : CircularProgress}</p>
-            <button type="button" onClick={this.handleShuffle}> New Quote </button>
-            <button type="button"> <a class="twitter-share-button" href={populateTweet}>Tweet Quote</a> </button>
+            <div>{quote ? `"${quote}"` : <CircularProgress />}</div>
+            <div style={authorStyles}>{author ? `- ${author}` : null}</div>
+            <Button color="primary" onClick={this.handleShuffle}> New Quote </Button>
+            <Button color="primary" href={populateTweet} >Tweet Quote </Button>
           </Paper>
         </div>
       </div>
