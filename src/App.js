@@ -6,6 +6,11 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import axios from 'axios';
 
+import {
+  TwitterIcon,
+  TwitterShareButton
+} from 'react-share';
+
 // LOCAL VARIABLES
 const url = 'https://talaikis.com/api/quotes/random/';
 
@@ -31,6 +36,20 @@ const authorStyles = {
   margin: '15px 0',
   textAlign: 'right',
 }
+
+const buttonRow = {
+  display: 'flex',
+  justifyContent: 'space-between'
+}
+
+const tweetStyles = {
+  cursor: 'pointer'
+}
+
+const hashtags = [
+  'freeCodeCamp',
+  'RandomQuoteMachine'
+]
 
 // COMPONENT DEFINITION
 export default class App extends Component {
@@ -59,6 +78,7 @@ export default class App extends Component {
   render() {
     const { author, quote } = this.state;
     const populateTweet = `https://twitter.com/intent/tweet?text=${quote} -${author}`;
+    const quoteAndAuthor = `${quote} -${author}`;
     return (
       <div style={wrapper}>
         <CssBaseline />
@@ -66,11 +86,24 @@ export default class App extends Component {
           <Paper style={paper}>
             <div>{quote ? `"${quote}"` : <CircularProgress />}</div>
             <div style={authorStyles}>{author ? `- ${author}` : null}</div>
-            <Button color="primary" onClick={this.handleShuffle}> New Quote </Button>
-            <Button color="primary" href={populateTweet} >Tweet Quote </Button>
+            <div style={buttonRow}>
+              <TwitterShareButton
+                url={populateTweet}
+                style={tweetStyles}
+                title={quoteAndAuthor}
+                hashtags={hashtags}
+              >
+                <TwitterIcon
+                  size={32}
+                  round
+                />
+              </TwitterShareButton>
+              <Button color="primary" onClick={this.handleShuffle}> New Quote </Button>
+            </div>
+
           </Paper>
         </div>
-      </div>
+      </div >
     );
   }
 }
